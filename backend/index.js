@@ -4,7 +4,7 @@ const app = express()
 const port = 3000
 
 const spawn = require("child_process").spawn;
-
+const getStats = require('./getStats');
 
 let food = [
     {
@@ -36,16 +36,18 @@ let food = [
 
 
 app.get('/', async (req, res) => {
-    try {    
-        executeScript(JSON.stringify(food), 10, 1500).then((solution)=>{
-            console.log(solution);
-            res.send(solution);
-        })
-    } catch(e) {
-        console.log(e);
-        res.sendStatus(500);
-    }
+    // try {    
+        // executeScript(JSON.stringify(food), 10, 1500).then((solution)=>{
+            // console.log(solution);
+            // res.send(solution);
+        // })
+    // } catch(e) {
+        // console.log(e);
+        // res.sendStatus(500);
+    // }
+    getStats()
 })
+
 
 const executeScript = async (food, prot_min, cal_max)=>{
     const pythonProcess = spawn('python',["./model.py", food, prot_min, cal_max]);
@@ -57,7 +59,7 @@ const executeScript = async (food, prot_min, cal_max)=>{
         resString += buff.toString();
     });
     await once(pythonProcess, 'exit');
-    return resString;
+    return resString.split('-SEPERATOR-')[1];
 }
 
 app.listen(port, () => {

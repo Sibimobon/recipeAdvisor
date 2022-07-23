@@ -1,3 +1,4 @@
+
 from pulp import *
 import json
 import sys
@@ -40,11 +41,14 @@ my_lp_program += lpSum([(
 my_lp_program.solve()
 
 # print("Status:", LpStatus[my_lp_program.status])
+# 
 
-# print("Total Optimum=", value(my_lp_program.objective))
-# 
-# for v in my_lp_program.variables():
-    # print(v.name, "=", v.varValue)
-# 
+print("-SEPERATOR-")
+
+print("Total Optimum=", value(my_lp_program.objective))
+
+for v in my_lp_program.variables():
+    print(v.name, "=", v.varValue)
+
 
 sys.stdout.flush()
