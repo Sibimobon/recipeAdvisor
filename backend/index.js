@@ -36,7 +36,7 @@ let food = [
 
 
 app.get('/', async (req, res) => {
-try {    
+    try {    
         executeScript(JSON.stringify(food), 10, 1500).then((solution)=>{
             console.log(solution);
             res.send(solution);

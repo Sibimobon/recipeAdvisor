@@ -4,17 +4,12 @@ import sys
 # defining list of products
 
 food = json.loads(sys.argv[1])
-prot_min = sys.argv[2]
-cal_max = sys.argv[3]
+prot_min = float(sys.argv[2])
+cal_max = float(sys.argv[3])
 
 recipes = []
 calories = {}
 protein = {}
-
-print(food)
-print(prot_min)
-print(cal_max)
-
 
 for item in food:
     # now song is a dictionary
@@ -23,12 +18,9 @@ for item in food:
     calories[item["name"]] = item["calories"]
     #protein[item["name"]].append(item["protein"])
 
-print("food mapped")
 
 # Good practice to first define your problem
 my_lp_program = LpProblem('My_LP_Problem', LpMinimize)  
-
-print("problem defined")
 
 # ~~>You do not need bounds for binary variables, they are automatically 0/1
 recipes_var=LpVariable.dicts("Recipe", recipes, cat='Binary')
@@ -49,10 +41,10 @@ my_lp_program.solve()
 
 # print("Status:", LpStatus[my_lp_program.status])
 
-print("Total Optimum=", value(my_lp_program.objective))
-
-for v in my_lp_program.variables():
-    print(v.name, "=", v.varValue)
-
+# print("Total Optimum=", value(my_lp_program.objective))
+# 
+# for v in my_lp_program.variables():
+    # print(v.name, "=", v.varValue)
+# 
 
 sys.stdout.flush()
