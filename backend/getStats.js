@@ -1,4 +1,5 @@
 const foods = require('./data/FoodData').FoundationFoods;
+// const foodNames = Object.keys(foods).map(a=>a.description);
 
 function getStats (recipe) {
     // console.log(Object.keys(foods[0]))
@@ -7,10 +8,28 @@ function getStats (recipe) {
     //   console.log(element)  
     // });
     let test = foods[0];
-    console.log(Object.keys(test))
+    // console.log(Object.keys(test))
     // console.log(test.description)
-    // console.log(test.foodNutrients)
-    console.log(food.foodProximates)
+    let test2 = test.foodNutrients[1]
+    // console.log(Object.keys(test.foodNutrients))
+    //test2.forEach(nut=>{
+    //    console.log(nut.nutrient.name)
+    //})
+
+
+// 
+    // for (i in Object.keys(test.foodNutrients)){
+        // console.log(test.foodNutrients[i].nutrient.name)
+    // }
+
+    // console.log(test2.nutrient.name)
+
+    // console.log(test2.nutrient.name)
+    // console.log(test.foodAttributes)
+
+    
+    // Object.keys(foods).forEach(a=>console.log(a));
+    foods.forEach
 }
 
 getStats()
