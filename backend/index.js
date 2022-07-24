@@ -97,19 +97,21 @@ let food = [
 
 app.get('/', async (req, res) => {
     console.log('in hello world')
-    // try {    
-        // executeScript(JSON.stringify(food), 10, 1500).then((solution)=>{
-            // console.log(solution);
-            // res.send(solution);
-        // })
-    // } catch(e) {
-        // console.log(e);
-        // res.sendStatus(500);
-    // }
-    // getStats()
-    let result = await getNutrients(req.query.name);
-    console.log("sending res "+result);
-    res.send(JSON.stringify(result))
+    try {    
+        executeScript(JSON.stringify(food), 10, 1500).then((solution)=>{
+            console.log(solution);
+            res.send(solution);
+        })
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+    getStats()
+
+
+    //let result = await getNutrients(req.query.name);
+    //console.log("sending res "+result);
+    //res.send(JSON.stringify(result))
 })
 
 
