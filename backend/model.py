@@ -44,11 +44,19 @@ my_lp_program.solve()
 # 
 
 print("-SEPERATOR-")
+optimum = value(my_lp_program.objective)
 
-print("Total Optimum=", value(my_lp_program.objective))
+res = {
+    "optimum": optimum,
+}
+
+# print("Total Optimum=", value(my_lp_program.objective))
 
 for v in my_lp_program.variables():
-    print(v.name, "=", v.varValue)
+    # print(v.name, "=", v.varValue)
+    res[v.name] = v.varValue
+
+print(res)
 
 
 sys.stdout.flush()

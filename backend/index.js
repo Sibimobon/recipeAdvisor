@@ -36,33 +36,38 @@ app.post('/food', (req, res) => {
 app.post('/recipe', async (req, res) => {
     let ingredients = req.body;
     console.log(ingredients);
-    let amounts = [];
-    //Object.keys(ingredients).forEach(async i=> {
-    //    // call getNutrients
-    //    let nutrients = await getNutrients(i)
-    //    // map to *=amount/100
-    //    let factor = ingredients[i]/100;
-    //    Object.keys(nutrients).map(nutr=> {
-    //        nutrients[nutr]=nutrients[nutr]*factor;
-    //    });
-    //    //append to amounts
-    //    amounts.push(nutrients);
-    //})
-
-    for await (let i of Object.keys(ingredients)){
-        // call getNutrients
-        let nutrients = await getNutrients(i)
-        // map to *=amount/100
-        let factor = ingredients[i]/100;
-        Object.keys(nutrients).map(nutr=> {
-            nutrients[nutr]=nutrients[nutr]*factor;
-        });
-        //append to amounts
-        amounts.push(nutrients);
-    }
+    let result = await calculateRecipe(ingredients);
     //amounts into calculate recipe
-    res.end(JSON.stringify(calculateRecipe(amounts)));
+    res.end(JSON.stringify(result));
     // res.send(JSON.stringify(ingredients))
+});
+
+
+app.post('/findBest', async (req, res) => {
+    // let recipes = JSON.parse(req.body);
+    let recipes = req.body;
+    console.log(recipes);
+    // recipes = {name:{ingredients...}}
+    let relevant = []
+    Object.keys(recipes).forEach(r => {
+        let stats = JSON.parse(recipes[r]);
+        let desc = {
+            "name": r,
+            "protein": stats.proteins,
+            "calories": stats["energy-kcal"]
+        }
+        relevant.push(desc);
+    });
+    // console.log(relevant);
+    try {    
+        executeScript(JSON.stringify(relevant), 10, 4000).then((solution)=>{
+            console.log(solution);
+            res.send(solution);
+        })
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
 });
 
 
@@ -106,7 +111,7 @@ app.get('/', async (req, res) => {
         console.log(e);
         res.sendStatus(500);
     }
-    getStats()
+    // getStats()
 
 
     //let result = await getNutrients(req.query.name);
